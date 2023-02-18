@@ -125,11 +125,11 @@ author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 #### user.post_set.all(), user.modelname_set.all()
 
-> > > from blog.models import Post from django.contrib.auth.models import User
-> > > User.objects.all() User.objects.first() User.objects.last()
-> > > User.objects.filter(username="milankc4860@gmail.com") user =
-> > > User.objects.filter(username="milankc4860@gmail.com").first() user.id
-> > > user.pk user = User.objects.get(id=1)
+<p> from blog.models import Post from django.contrib.auth.models import User</p>
+<p> User.objects.all() User.objects.first() User.objects.last()</p>
+<p> User.objects.filter(username="milankc4860@gmail.com")</p>
+<p> User.objects.filter(username="milankc4860@gmail.com").first()</p>
+<p> user.pk user = User.objects.get(id=1)</p>
 
 ### Create to db
 
@@ -139,19 +139,19 @@ author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 #### user.post_set.create(title="Blog 3", content="Third Post Content")
 
-> > > Post.objects.all() user = User.objects.get(id=1) user <User:
-> > > milankc4860@gmail.com> user.id 1 user.username 'milankc4860@gmail.com'
-> > > user.password
-> > > 'pbkdf2_sha256$390000$ou0ewvsIucbqtpU0jAg7N5$O9h7x1GOLzrfeCTh7Zp2rVEFuguc1Ef5dAObwodNbmU='
-> > > Post.objects.all() <QuerySet []> post_1 = Post(title="Blog 1",
-> > > content="First Blog Post", author=user) Post.objects.all() <QuerySet []>
+<p>Post.objects.all() user = User.objects.get(id=1) user <User:
+milankc4860@gmail.com> user.id 1 user.username 'milankc4860@gmail.com' </p>
+<p>user.password</p>
+<p>Post.objects.all() <QuerySet []> post_1 = Post(title="Blog 1",</p>
+<p>content="First Blog Post", author=user) Post.objects.all() <QuerySet []></p>
 
 <QuerySet [<User: milankc4860@gmail.com>, <User: TestUser>]>
 
 ### Using the db:quering the db
 
-def home(request): context = { 'posts': Post.objects.all(), } return
-render(request, 'blog/home.html', context)
+def home(request):
+   context = { 'posts': Post.objects.all(), } 
+   return render(request, 'blog/home.html', context)
 
 ##### Materials from
 
