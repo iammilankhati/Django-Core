@@ -1,5 +1,5 @@
-# Try Django
 
+## Django Core
 ## Creating the virtual env (GETTING STARTED)
 
 1. python -m venv venv - create the virtual environment
@@ -149,18 +149,24 @@ milankc4860@gmail.com> user.id 1 user.username 'milankc4860@gmail.com' </p>
 def home(request): context = { 'posts': Post.objects.all(), } return
 render(request, 'blog/home.html', context)
 
-## STEP 5 FORMS
+## STEP 5: FORMS
 
 #### Default form in django
 
 from django.contrib.auth.forms import UserCreationForm
 
-//users/views.py def register(request): if request.method == 'POST': form =
-UserCreationForm(request.POST) if form.is_valid(): username =
-form.cleaned_data.get('username') messages.success(request, f'Account created
-for {username}!') return redirect('blog-home') else: form = UserCreationForm()
-return render(request, 'users/register.html', { "form": form, })
-
+//users/views.py 
+<div>
+def register(request): 
+   if request.method == 'POST': 
+   form = UserCreationForm(request.POST) 
+      if form.is_valid(): 
+         username = form.cleaned_data.get('username') 
+         messages.success(request, f'Account created for {username}!') 
+         return redirect('blog-home') 
+      else: form = UserCreationForm()
+   return render(request, 'users/register.html', { "form": form, })
+</div>
 //users/templates/users/register.py {% extends 'blog/base.html' %}
 {% extends 'blog/base.html' %} 
 {% load crispy_forms_tags %}
@@ -202,6 +208,7 @@ class UserRegistrationForm(UserCreationForm):
 
 
 ### issues for crispy template doesn't exist for styling
+
 
       I also ran to this problem but crispy-form is already supporting boostrap 5. In their github page was instructed as so
 
