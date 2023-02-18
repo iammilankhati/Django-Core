@@ -48,7 +48,7 @@
 						{% comment %} Navbar Right Side {% endcomment %}
 						<div class="navbar-nav">
 							<a href="#" class="nav-item nav-link">Login</a>
-							<a href="#" class="nav-item nav-link">Register</a>
+							<a href="{% url "register" %}" class="nav-item nav-link">Register</a>
 						</div>
 					</div>
 				</div>
@@ -58,6 +58,11 @@
 		<main role="main" class="container">
             <div class="row">
                 <div class="col-md-8">
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-{{message.tags}}">{{message}}</div>
+						{% endfor %}
+					{% endif %}
                     {% block content %}{% endblock content %}
                 </div>
                 <div class="col-md-4">

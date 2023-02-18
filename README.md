@@ -1,7 +1,5 @@
 # Try Django
 
-
-
 ## Creating the virtual env (GETTING STARTED)
 
 1. python -m venv venv - create the virtual environment
@@ -131,7 +129,7 @@ author = models.ForeignKey(User, on_delete=models.CASCADE)
 <p> User.objects.filter(username="milankc4860@gmail.com").first()</p>
 <p> user.pk user = User.objects.get(id=1)</p>
 
-### Create to db
+### Write to db
 
 #### vpost_1 = Post(title="Blog 1", content="First Blog Post", author=user)
 
@@ -142,16 +140,87 @@ author = models.ForeignKey(User, on_delete=models.CASCADE)
 <p>Post.objects.all() user = User.objects.get(id=1) user <User:
 milankc4860@gmail.com> user.id 1 user.username 'milankc4860@gmail.com' </p>
 <p>user.password</p>
-<p>Post.objects.all() <QuerySet []> post_1 = Post(title="Blog 1",</p>
-<p>content="First Blog Post", author=user) Post.objects.all() <QuerySet []></p>
+<p>Post.objects.all() 
+</p>
+<p>post_1 = Post(title="Blog 1" ,content="First Blog Post", author=user) Post.objects.all() <QuerySet []> (exit and relogin to get the data)</p>
 
-<QuerySet [<User: milankc4860@gmail.com>, <User: TestUser>]>
+### Using db in views
 
-### Using the db:quering the db
+def home(request): context = { 'posts': Post.objects.all(), } return
+render(request, 'blog/home.html', context)
 
-def home(request):
-   context = { 'posts': Post.objects.all(), } 
-   return render(request, 'blog/home.html', context)
+## STEP 5 FORMS
+
+#### Default form in django
+
+from django.contrib.auth.forms import UserCreationForm
+
+//users/views.py def register(request): if request.method == 'POST': form =
+UserCreationForm(request.POST) if form.is_valid(): username =
+form.cleaned_data.get('username') messages.success(request, f'Account created
+for {username}!') return redirect('blog-home') else: form = UserCreationForm()
+return render(request, 'users/register.html', { "form": form, })
+
+//users/templates/users/register.py {% extends 'blog/base.html' %}
+{% extends 'blog/base.html' %} 
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> Join Today</legend>
+            {{form|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Sign Up</button>
+        </div>
+    </form>
+
+    <div class="border-top pt-3 mt-4">
+        <small class="text-muted">Already Have An Account ?
+            <a href="#" class="ms-2">Sign In</a>
+        </small>
+
+    </div>
+</div>
+{% endblock content %}
+
+//blog/base.html for alert message 
+   {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{message.tags}}">{{message}}</div> {% endfor %}
+   {% endif %}
+
+//custom forms
+class UserRegistrationForm(UserCreationForm):
+    email: forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+
+### issues for crispy template doesn't exist for styling
+
+      I also ran to this problem but crispy-form is already supporting boostrap 5. In their github page was instructed as so
+
+      $ pip install django-crispy-forms
+
+      $ pip install crispy-bootstrap5
+      And in settings.py
+
+      INSTALLED_APPS = [
+      ...,
+      'crispy_forms',
+      'crispy_bootstrap5',  # Forgetting this was probably your error
+      ]
+      And then at the bottom of the page of settings.py
+
+      CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+      CRISPY_TEMPLATE_PACK = "bootstrap5"
+      This worked for me solving the TemplateDoesNotExist error. No need to downgrade to bootstrap4
+
 
 ##### Materials from
 
